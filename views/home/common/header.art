@@ -1,0 +1,21 @@
+	<!--头部框架-->
+	<div class="header">
+		<div class="w1100">
+			<!--网站logo-->
+			<h1 class="logo fl">
+				<a href="default.art"><img src="" alt=""></a>
+			</h1>
+			<!--/网站logo-->
+			<!--网站导航-->
+			<ul class="navigation fr">
+				<li>
+					<a href="/home">首页</a>
+				</li>
+				<li>
+					<a href="/login">登录</a>
+				</li>
+			</ul>
+			<!--/网站导航-->
+		</div>
+	</div>
+	<!--/头部框架-->

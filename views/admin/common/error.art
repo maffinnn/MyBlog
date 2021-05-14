@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, 
+		user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
+		minimum-scale=1.0">
+	<title>Blog - Content Manager</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/admin/css/base.css">
+</head>
+
+<body>
+	<p class="bg-danger error">{{msg}}</p>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="/admin/js/common.js"></script>
+	<!--发生错误3秒后 页面跳转login页面 在客户端操作-->
+	<script type="text/javascript">
+		setTimeout(function(){
+			//跳转页面
+			location.href = '/admin/login';
+		}，3000);
+	</script>
+</body>
+</html>
+

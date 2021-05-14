@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, 
+	user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
+	minimum-scale=1.0">
+	<title>首页</title>
+	<!--在线引入bootstrap -->
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	</head>
+<body>
+	{{include './common/header.art'}}
+	<!--文章列表-->
+	<ul class="list w1100">
+		{{each results}}
+		<!--$index 代表当前循环的索引-->
+		<!--fl 和fr是类名-->
+		<li class="{{($index%2)==0?'fr':'fl'}}">
+			<!--在跳转的过程中需将当前文章的id传递到服务端 使用get参数方式-->
+			<a href="/home/article?id={{@$value._id}}" class="thumbnail">
+				<img src="{{$value.cover}}">
+			</a>
+			<div class="content">
+				<a class="article-title" href="/home/article?id={{@$value._id}}">{{$value.title}}</a>
+				<div class="article-info">
+					<span class="author">{{$value.author.username}}</span>
+					<span>{{dateFormat($value.publishDate, 'yyyy-mm-dd')}}</span>
+					<div class="brief">	
+						<!--需要做字符串替换 将html标签替换成空-->
+						<!--替换页面中的html标签 使用js里的replace方法 正则表达式-->
+						<!--这里的正则表达式表示了除了大于号>以外的任意字符出现一次到多次 并进行全局配置 因为在内容中存在多个html标签-->
+						<!--使用substr()来进行对内容的截取以作节选 这里显示0-90个字符-->
+						<!--后面的省略号时属于字符串拼接-->
+						<!--@表示原文输出 考虑情况 e.g. &nbsp-->
+						{{@$value.content.replace(/<[^>]+>/g,'').substr(0,90)+'...'}}
+					</div>
+				</div>
+			</div>
+		</li>
+		{{/each}}
+	</ul>
+	<!--/文章列表-->
+	<!--分页-->
+	<nav aria-label="Page navigation">
+		<ul class="pagination">
+			<!--如果上一页不存在 则将上一页按钮隐藏-->
+			<li style="display:<%= page-1< 1 ?'none':'inline' %>">
+			<!--注意： 问号后面的第一个page表示参数名字 第二个page表示user.js 所传递过来的变量的值 即当前页的值-->
+			   	<a href="/home/?page=<%= page-1 %>" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			    </a>
+			</li>
+			    <!--模板中 =i 表示输出-->
+			<% for (var i = 1; i<=total; i++) { %>
+			<li><a href="/home/?page=<%= i%>" class="<%= page==i?'active':'' %>">{{i}}</a></li>
+			<% } %>
+			<li style="display:<%=page-0+1>total?'none':'inline' %>">
+			    	<!--下一页-->
+			    	<!--这里page-0+1的原因是原来的加号没有隐式类型转换的功能 变成了字符串拼接的 加上减号可以将原来page字符串转化为数值进行输出-->
+			    <a href="/home/?page=<%=page-0+1%>" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			    </a>
+			</li>
+		</ul>
+	</nav>
+	<!--/分页-->
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</body>

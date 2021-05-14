@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, 
+	user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
+	minimum-scale=1.0">
+	<title>文章详情</title>
+	<!--在线引入bootstrap -->
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	</head>
+<body>
+	{{include './common/header.art'}}
+	<!--/头部框架-->
+	<!--文章框架-->
+	<div class="article">
+		<div class="w1100">
+			<div class="container">
+				<div class="article-header">
+					<h3 class="article-title">{{article.title}}</h3>
+					<div class="article-info">
+						<span class="autor">{{article.author.username}}</span>
+						<span>{{dateFormat(article.publishDate, 'yyyy-mm-dd')}}</span>
+					</div>
+				</div>
+				<div class="article-content">
+					{{@article.content}}
+				</div>
+				<div class="article-comment">
+					<!--如果用户是登录状态 则显示评论区域-->
+					{{if userInfo}}
+					<h4>评论</h4>
+					<form class="comment-form" action="/home/comment" method="post">
+						<textarea class="comment" name="content"></textarea>
+						<div class="items">
+							<!--为表单添加隐藏域 用于post请求传输-->
+							<input type="hidden" name="aid" value="{{@article._id}}">
+							<input type="hidden" name="uid" value="{{@userInfo._id}}">
+							<div class="items">
+								<input type="submit" value="提交">
+							</div>
+						</div>
+					</form>
+					{{else}}
+					<a href="/admin/login">请先登录后再评论</a>
+
+					{{/if}}
+					<div class="comment-list">
+						{{each comments}}
+						<div class="mb10">
+							<div class="article-info">
+								<span class="author">{{$value.uid.username}}</span>
+								<span>{{dateFormat($value.time, 'yyyy-mm-dd')}}</span>
+								<span>{{$value.uid.email}}</span>
+							</div>
+							<div class="comment-content">
+								{{$value.content}}
+							</div>
+						</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+		</div> 
+	</div>
+	<!--/文章框架-->
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</body>
+</html>
