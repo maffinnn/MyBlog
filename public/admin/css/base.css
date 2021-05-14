@@ -1,0 +1,43 @@
+body.ul{
+	margin: 0;
+}
+body{
+	font-size: 12px;
+	font-family: 'Microsoft YaHei', 'Times New Roman';
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+}
+
+a, a:hover{
+	text-decoration: none;
+}
+
+a: hover{
+
+}
+
+h4 {
+	margin: 0;
+}
+.fl{
+	float: left;
+}
+.fr {
+	float: right;
+}
+
+.header {
+	height: 72px;
+	width: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	box-shadow: 0 1px 2px 0 rgba(40,42,49,.16);
+	z-index:100;
+}
+.header.logo{
+	
+}
